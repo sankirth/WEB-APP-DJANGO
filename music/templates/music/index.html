@@ -1,0 +1,59 @@
+{% extends 'music/base.html' %}
+{% block body %}
+
+
+    <!-- Albums -->
+    
+    <div style="width:100%">
+
+
+    <!-- If user searches and there are songs -->
+    {% if all_albums %}
+        <div>
+            <div class="col-sm-12">
+                <h3>Songs</h3>
+            </div>
+            
+                        
+                            
+                            
+    {% for album in all_albums %}
+        <div style="width: 30%;height:60%;margin:2%; overflow:hidden;float:left;">
+                                        
+            <a href="{% url 'music:detail' album.id %}">
+                    <img src="{{ album.album_logo.url }}" class="img-responsive" style="width: 100%;height:60%; float: left; margin-right: 10px;" />
+                </a>
+            <br>
+             <div class="panel panel-default">
+             <div class="panel-body">
+            <table class="table" style="padding-top:3%;">
+
+            <tr style="padding:3% 0% 0% 0%"><h3>{{ album.album_title }}</h3></tr>
+            <tr style="padding:3% 0% 0% 0%">{{ album.artist }}</tr>
+            </table>
+                <a target="_blank" href="#">
+                    <button type="button" class="btn btn-success btn-xs" >
+                        <span class="glyphicon glyphicon-ok"></span>&nbsp; select
+                    </button>
+
+                </a>
+                    <form action="{% url 'music:album-delete' album.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="album_id" value="{{ album.id }}" />
+                            <button type="submit" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+            </div></div>
+       
+    
+        </div>
+    {% endfor %}
+
+
+</div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
